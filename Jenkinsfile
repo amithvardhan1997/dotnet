@@ -32,8 +32,8 @@ pipeline {
          aws configure set default.region ap-south-1
          DOCKER_LOGIN_PASSWORD=$(aws ecr get-login-password  --region ap-south-1)
          docker login -u AWS -p $DOCKER_LOGIN_PASSWORD 742376008946.dkr.ecr.ap-south-1.amazonaws.com
-	 docker build -t 742376008946.dkr.ecr.ap-south-1.amazonaws.com/ammu:SAMPLE-PROJECT-${BUILD_NUMBER} .
-	 docker push 742376008946.dkr.ecr.ap-south-1.amazonaws.com/ammu:SAMPLE-PROJECT-${BUILD_NUMBER}
+	 docker build -t 742376008946.dkr.ecr.ap-south-1.amazonaws.com/new:SAMPLE-PROJECT-${BUILD_NUMBER} .
+	 docker push 742376008946.dkr.ecr.ap-south-1.amazonaws.com/new:SAMPLE-PROJECT-${BUILD_NUMBER}
           
 	  '''
      }   
@@ -47,7 +47,7 @@ pipeline {
                   export AWS_DEFAULT_REGION=ap-south-1
 		  chmod +x changebuildnumber.sh
                   ./changebuildnumber.sh $BUILD_NUMBER
-                  aws eks --region ap-south-1 update-kubeconfig --name ammu
+                  aws eks --region ap-south-1 update-kubeconfig --name new
                   cat deployment.yml
                   kubectl apply -f  deployment-new.yml
                   kubectl get pods 
